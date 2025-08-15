@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>ProZemi JSON Generator</title>
+<script>
+const blockMap = {
+  "say": { call: "@say", args: ["text", "duration"] },
+  "move": { call: "moveTo", args: ["x", "y"] },
+  "play_sound": { call: "@playSound", args: ["sound"] }
+};
+
+function parseCommands(input) {
+  const lines = input.split("\n").map(l => l.trim()).filter(l => l && !l.startsWith("#"));
+  let program = [];
+
+  for (let line of lines) {
+    const match = line.match(/^(\w+)\((.*)\)$/);
+    if (!match) continue;
+    const cmd = match[1];
+    const params = match[2].split(",").map(p => p.trim().replace(/^"|"$/g, ""));
+    if (blockMap[cmd]) {
+      const { call } = blockMap[cmd];
+      program.push({ call: call, callArgs: params });
+    }
+  }
+  return program;
+}
+
+function generateJSON() {
+  const input = document.getElementById("commandInput").value;
+  const program = parseCommands(input);
+
+  const jsonTemplate = {
+    attributes: { name: "さくひん1" },
+    background: {
+      instances: [{ x: 0, y: 0, z: 0 }],
+      programs: [
+        {
+          attributes: { type: "program", x: 0, y: 0 },
+          program: program
+        }
+      ]
+    },
+    characters: []
+  };
+
+  document.getElementById("jsonOutput").value = JSON.stringify(jsonTemplate, null, 2);
+}
+
+function downloadJSON() {
+  const text = document.getElementById("jsonOutput").value;
+  const blob = new Blob([text], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "prozemi_project.json";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+</script>
+</head>
+<body>
+<h1>ProZemi JSON Generator</h1>
+<textarea id="commandInput" rows="8" cols="50" placeholder='例:
+say("テストだよ～", 3)
+move(100, 0)
+play_sound("bell")'></textarea><br><br>
+<button onclick="generateJSON()">JSON生成</button>
+<button onclick="downloadJSON()">ダウンロード</button>
+<br><br>
+<textarea id="jsonOutput" rows="20" cols="70" readonly></textarea>
+</body>
+</html>
