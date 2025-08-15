@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<link rel="me" href="https://misskey-square.net/@io4null" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safari.booster-Mod</title>
+  <style>
+    /* 全般 */
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      background-color: #111;
+      color: #fff;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    h1, h2, h3, h4 {
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    /* ヘッダー */
+    .hero {
+      background: #000;
+      color: #fff;
+      padding: 5rem 2rem;
+      text-align: center;
+      transition: transform 0.5s ease-in-out;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .hero:hover {
+      transform: scale(1.05);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background-color: rgba(0, 0, 0, 0.8);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+    }
+
+    .nav-links li {
+      margin-left: 2rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.1rem;
+      padding: 0.5rem 0;
+      transition: color 0.3s ease, border-bottom 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #ff4081;
+      border-bottom: 2px solid #ff4081;
+    }
+
+    .hero-content h2 {
+      font-size: 3.5rem;
+      margin-top: 1rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+
+    .hero-content p {
+      font-size: 1.4rem;
+      margin-top: 1.5rem;
+      opacity: 0.8;
+      letter-spacing: 1px;
+    }
+
+    .hero .button {
+      background-color: #ff4081;
+      padding: 1rem 2.5rem;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-top: 2rem;
+      font-weight: 600;
+      font-size: 1.2rem;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .hero .button:hover {
+      transform: scale(1.1);
+      background-color: #e0006c;
+    }
+
+    /* 機能セクション */
+    .features {
+      padding: 6rem 2rem;
+      background: #222;
+    }
+
+    .feature-list {
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .feature-item {
+      flex: 1;
+      background: #333;
+      padding: 2rem;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      animation: fadeInUp 1.5s ease-out;
+    }
+
+    .feature-item:hover {
+      transform: translateY(-10px);
+      background-color: #444;
+    }
+
+    .feature-item h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    /* スポンサーセクション */
+    .sponsors {
+      padding: 6rem 2rem;
+      background: #222;
+      text-align: center;
+    }
+
+    .sponsor-list {
+      display: flex;
+      justify-content: space-around;
+      gap: 2rem;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .sponsor-item {
+      flex: 1;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .sponsor-item:hover {
+      transform: scale(1.1);
+    }
+
+    .sponsor-item img {
+      max-width: 150px;
+      margin-bottom: 1rem;
+    }
+
+    /* FAQセクション */
+    .faq {
+      padding: 6rem 2rem;
+      background: #333;
+      text-align: center;
+    }
+
+    .faq-item {
+      margin-bottom: 1.5rem;
+    }
+
+    .faq-question {
+      background: #444;
+      border: 1px solid #555;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      width: 100%;
+      text-align: left;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+   　　color: #fff;
+    }
+
+    .faq-question:hover {
+      background: #555;
+      transform: scale(1.05);
+   　color: #fff;
+    }
+
+    .faq-answer {
+      display: none;
+      background: #444;
+      padding: 1rem;
+      border: 1px solid #555;
+      border-top: none;
+    }
+
+/* 使い方セクション */
+    .cta {
+      padding: 6rem 2rem;
+      background: #222;
+      color: #fff;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      line-height: 1.8;
+    }
+
+    .cta-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .cta-item {
+      background: #333;
+      padding: 1.5rem;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .cta-item h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* フッター */
+    .footer {
+      background: #000;
+      color: #fff;
+      padding: 3rem 2rem;
+      text-align: center;
+      transition: background 0.3s ease;
+    }
+
+    .footer-links a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: #ff4081;
+    }
+
+    /* メディアクエリ */
+    @media (max-width: 768px) {
+      .feature-list {
+        flex-direction: column;
+      }
+
+      .sponsor-list {
+        flex-direction: column;
+      }
+    }
+
+    /* アニメーション */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header class="hero">
+    <div class="container">
+      <nav class="navbar">
+        <h1 class="logo">Safari-booster</h1>
+        <ul class="nav-links">
+          <li><a href="#features">機能一覧</a></li>
+          <li><a href="#cta">使い方</a></li>
+          <li><a href="#faq">よくある質問</a></li>
+          <li><a href="#sponsors">スポンサー</a></li>
+        </ul>
+      </nav>
+      <div class="hero-content">
+        <h2>パフォーマンスを向上︎</h2>
+        <p>ブラウザページに拡張パネルを追加し、効率を最大化するためのシンプルで強力なフレーム。</p>
+        <a href="https://google.com" class="button primary">ツールを使う</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main>
+    <!-- 機能セクション -->
+    <section id="features" class="features">
+      <div class="container">
+        <h2>主な機能</h2>
+        <div class="feature-list">
+          <div class="feature-item">
+            <img src="IMG_1450.jpeg" alt="機能1" width="300" height="250">
+            <h3>機能1</h3>
+            <p>カスタマイズ性の高いフレームワーク</p>
+          </div>
+          <div class="feature-item">
+          <img src="IMG_1451.jpeg" alt="機能2" width="400" height="250">
+            <h3>機能2</h3>
+            <p>各デバイスで瞬時に実行</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<!-- 使い方セクション -->
+    <section id="cta" class="cta">
+      <div class="container">
+        <h2>使い方</h2>
+        <p>Safari-boosterを利用するには、以下の簡単な手順をお試しください。</p>
+        <div class="cta-list">
+          <div class="cta-item">
+            <h3>手順1: ツールのインストール</h3>
+            <p>"ツールを使う"からSafari-boosterコードをダウンロードし、インストールしてください。</p>
+         <div class="cta-item">
+            <h3>手順2: パネルのカスタマイズ</h3>
+            <p>ローカルのコードエディター(VScode等)を開き、利用環境に合わせてコードを編集します。</p>
+          </div>
+          <div class="cta-item">
+            <h3>手順3: パフォーマンスの確認</h3>
+            <p>ツールを実行して、ブラウザのパフォーマンス向上を体験してください。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- スポンサーセクション -->
+    <section id="sponsors" class="sponsors">
+      <div class="container">
+        <h2>スポンサー & パートナー</h2>
+        <div class="sponsor-list">
+          <div class="sponsor-item">
+            <img src="段落テキスト.png" alt="NOVAapi">
+            <p>NOVAapi/スポンサー</p>
+          </div>
+          <div class="sponsor-item">
+            <img src="段落テキスト2.png" alt="スポンサー2">
+            <p>HIVEcloud/パートナー</p>
+          </div>
+          <div class="sponsor-item">
+            <img src="IMG_1453.png" alt="スポンサー3">
+            <p>mesgaki/パートナー</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQセクション -->
+    <section id="faq" class="faq">
+      <div class="container">
+        <h2>よくある質問</h2>
+        <div class="faq-item">
+          <button class="faq-question">このツールは無料ですか？</button>
+          <div class="faq-answer">
+            <p>はい、このツールは完全無料で利用可能です。</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">データは安全ですか？</button>
+          <div class="faq-answer">
+            <p>ユーザーのデータは厳重に保護されます。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="sb-kiyaku.pdf">利用規約</a>
+        <a href="sb-privacy.pdf">プライバシーポリシー</a>
+      </div>
+      <p>© 2025 safari-booster. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // スムーズスクロール
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = e.target.getAttribute('href').substring(1);
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+
+      // FAQのトグル機能
+      document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => {
+          const answer = question.nextElementSibling;
+          const isOpen = answer.style.display === 'block';
+          document.querySelectorAll('.faq-answer').forEach(a => (a.style.display = 'none'));
+          answer.style.display = isOpen ? 'none' : 'block';
+        });
+      });
+    });
+  </script>
+</body>
+</html>
